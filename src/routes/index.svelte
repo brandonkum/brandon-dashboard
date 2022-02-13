@@ -1,6 +1,179 @@
 <script>
     import supabase from '$lib/db';
 
+
+    let timetable = {
+	Monday: [
+  	{
+    	name: "PH",
+    	period: 1,
+    	style: "",
+  	},
+  	{
+    	name: "PM",
+    	period: 1,
+    	style: "",
+  	},
+  	{
+    	name: "BI",
+    	period: 2,
+    	style: "",
+  	},
+  	{
+    	name: "R",
+    	period: 1,
+    	style: "table-success",
+  	},
+  	{
+    	name: "BM",
+    	period: 2,
+    	style: "",
+  	},
+  	{
+    	name: "M3",
+    	period: 2,
+    	style: "",
+  	},
+  	{
+    	name: "BC",
+    	period: 2,
+    	style: "",
+  	},
+	],
+	Tuesday: [
+  	{
+    	name: "PJPK",
+    	period: 1,
+    	style: "",
+  	},
+  	{
+    	name: "M3",
+    	period: 2,
+    	style: "",
+  	},
+  	{
+    	name: "BI",
+    	period: 1,
+    	style: "",
+  	},
+  	{
+    	name: "E",
+    	period: 1,
+    	style: "table-success",
+  	},
+  	{
+    	name: "BM",
+    	period: 2,
+    	style: "",
+  	},
+  	{
+    	name: "BC",
+    	period: 3,
+    	style: "",
+  	},
+  	{
+    	name: "PJPK",
+    	period: 1,
+    	style: "",
+  	},
+	],
+	Wednesday: [
+  	{
+    	name: "BC",
+    	period: 3,
+    	style: "",
+  	},
+  	{
+    	name: "PM",
+    	period: 1,
+    	style: "",
+  	},
+  	{
+    	name: "H",
+    	period: 1,
+    	style: "table-success",
+  	},
+  	{
+    	name: "PKS",
+    	period: 3,
+    	style: "",
+  	},
+  	{
+    	name: "BM",
+    	period: 2,
+    	style: "",
+  	},
+	],
+	Thursday: [
+  	{
+    	name: "SA",
+    	period: 1,
+    	style: "",
+  	},
+  	{
+    	name: "PJPK",
+    	period: 1,
+    	style: "",
+  	},
+  	{
+    	name: "BM",
+    	period: 2,
+    	style: "",
+  	},
+  	{
+    	name: "A",
+    	period: 1,
+    	style: "table-success",
+  	},
+  	{
+    	name: "PM",
+    	period: 1,
+    	style: "",
+  	},
+  	{
+    	name: "BC",
+    	period: 2,
+    	style: "",
+  	},
+  	{
+    	name: "M3",
+    	period: 2,
+    	style: "",
+  	},
+	],
+	Friday: [
+  	{
+    	name: "BI",
+    	period: 2,
+    	style: "",
+  	},
+  	{
+    	name: "BM",
+    	period: 2,
+    	style: "",
+  	},
+  	{
+    	name: "T",
+    	period: 1,
+    	style: "table-success",
+  	},
+  	{
+    	name: "BC",
+    	period: 2,
+    	style: "",
+  	},
+  	{
+    	name: "PM",
+    	period: 1,
+    	style: "",
+  	},
+  	{
+    	name: "SA",
+    	period: 2,
+    	style: "",
+  	},
+	],
+  };
     async function logout() {
    	 const { error } = await supabase.auth.signOut();
 
@@ -11,7 +184,9 @@
 
 </script>
 <div class="container">
-<table class="table">
+    <h1>Dashboard</h1>
+<table class="table caption-top text-center">
+    <caption>School Timetable</caption>
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -31,25 +206,48 @@
     <tbody>
       <tr>
         <th scope="row">Mon</th>
-        
-        
+        {#each timetable.Monday as timeSlot}
+        <td colspan={timeSlot.period} class={timeSlot.style}>
+        <button class="btn">{timeSlot.name}</button>
+        </td>
+        {/each}
       </tr>
       <tr>
         <th scope="row">Tues</th>
-       
+        {#each timetable.Tuesday as timeSlot}
+        <td colspan={timeSlot.period} class={timeSlot.style}>
+        <button class="btn">{timeSlot.name}</button>
+        </td>
+        {/each}
       </tr>
+
       <tr>
         <th scope="row">Wed</th>
-        
+        {#each timetable.Wednesday as timeSlot}
+        <td colspan={timeSlot.period} class={timeSlot.style}>
+        <button class="btn">{timeSlot.name}</button>
+        </td>
+        {/each}
       </tr>
+
       <tr>
         <th scope="row">Thurs</th>
-        
+        {#each timetable.Thursday as timeSlot}
+        <td colspan={timeSlot.period} class={timeSlot.style}>
+        <button class="btn">{timeSlot.name}</button>
+        </td>
+        {/each}
       </tr>
+
       <tr>
         <th scope="row">Fri</th>
-        
+        {#each timetable.Friday as timeSlot}
+        <td colspan={timeSlot.period} class={timeSlot.style}>
+        <button class="btn">{timeSlot.name}</button>
+        </td>
+        {/each}
       </tr>
+
     </tbody>
   </table>
 </div>
