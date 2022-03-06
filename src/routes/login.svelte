@@ -7,7 +7,7 @@
     async function loginUser() {
    	 const { error } = await supabase.auth.signIn({
    		 email,
-   		 password
+   		 password	
    	 });
 
    	 if (error) alert(error.message); // alert if error
@@ -44,4 +44,3 @@
 <div class="text-center mt-3">
     <a href="/signup" class="text-muted">First time? Click here to register for an account.</a>
 </div>
-
