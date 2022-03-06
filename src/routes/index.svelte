@@ -192,31 +192,60 @@
 		if (day === 'Monday') {
 			timetable.Monday = [...timetable.Monday, { name: '??', period: 1, style: '' }];
 		} else if (day === 'Tuesday') {
-			timetable.Tuesday = [...timetable.Monday, { name: '??', period: 1, style: '' }];
+			timetable.Tuesday = [...timetable.Tuesday, { name: '??', period: 1, style: '' }];
 		} else if (day === 'Wednesday') {
-			timetable.Wednesday = [...timetable.Monday, { name: '??', period: 1, style: '' }];
+			timetable.Wednesday = [...timetable.Wednesday, { name: '??', period: 1, style: '' }];
 		} else if (day === 'Thursday') {
-			timetable.Thursday = [...timetable.Monday, { name: '??', period: 1, style: '' }];
+			timetable.Thursday = [...timetable.Thursday, { name: '??', period: 1, style: '' }];
 		} else if (day === 'Friday') {
-			timetable.Friday = [...timetable.Monday, { name: '??', period: 1, style: '' }];
+			timetable.Friday = [...timetable.Friday, { name: '??', period: 1, style: '' }];
 		}
 	}
 
 	function deleteTimeSlot(day, index){
        timetable [day].splice(index,1);
 	   timetable = timetable;
+	   saveEntry();
     }
 	
 	function setTimeSlot(day, index, newName, newPeriod, newStyle){
 	timetable[day][index].name= newName;
 	timetable[day][index].period= newPeriod;
-    timetable[day][index].style= newStyle;}
+    timetable[day][index].style= newStyle;
+	saveEntry();
+}
+
+
 
 	async function logout() {
 		const { error } = await supabase.auth.signOut();
 
 		if (error) alert(error.message); // alert if error
 	}
+
+	// Upsert entry
+async function saveEntry() {
+  const { error } = await supabase.from("studentEntries").upsert(
+    {
+      user_id: supabase.auth.user().id,
+      timetable: timetable,
+    },
+    { onConflict: "user_id" }
+  );
+  if (error) alert(error.message);
+}
+
+// Get entries
+async function getEntries() {
+  const { data, error } = await supabase.from("studentEntries").select();
+  if (error) alert(error.message);
+
+  if (data != "") {
+    timetable = data[0].timetable;
+  }
+}
+
+getEntries();
 </script>
 
 <div class="container">
@@ -249,7 +278,7 @@
 					</td>
 				{/each}
 				<td>
-					<button class = "btn" on:click={() => addTimeSlot("Friday")} >+</button>
+					<button class = "btn" on:click={() => addTimeSlot("Monday")} >+</button>
 				</td>
 			</tr>
 
@@ -262,7 +291,7 @@
 					</td>
 				{/each}
 				<td>
-					<button class = "btn" on:click={() => addTimeSlot("Friday")} >+</button>
+					<button class = "btn" on:click={() => addTimeSlot("Tuesday")} >+</button>
 				</td>
 			</tr>
 
@@ -275,7 +304,7 @@
 					</td>
 				{/each}
 				<td>
-					<button class = "btn" on:click={() => addTimeSlot("Friday")} >+</button>
+					<button class = "btn" on:click={() => addTimeSlot("Wednesday")} >+</button>
 				</td>
 			</tr>
 
@@ -288,7 +317,7 @@
 					</td>
 				{/each}
 				<td>
-					<button class = "btn" on:click={() => addTimeSlot("Friday")} >+</button>
+					<button class = "btn" on:click={() => addTimeSlot("Thursday")} >+</button>
 				</td>
 			</tr>
 
