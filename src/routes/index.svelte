@@ -249,6 +249,17 @@ function showCurData(day,index,name,period,style){
   if (error) alert(error.message);
 }
 
+async function getEntries() {
+  const { data, error } = await supabase.from("studentEntries").select();
+  if (error) alert(error.message);
+
+  if (data != "") {
+    timetable = data[0].timetable;
+  }
+}
+
+getEntries();
+
 </script>
 
   
